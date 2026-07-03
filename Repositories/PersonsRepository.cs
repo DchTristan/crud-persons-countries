@@ -58,7 +58,7 @@ namespace Repositories
         {
             Person? matchingPerson = await _db.Persons.FirstOrDefaultAsync(temp => temp.PersonID == person.PersonID);
 
-            if (matchingPerson != null)
+            if (matchingPerson == null)
                 return person;
 
             matchingPerson.PersonName = person.PersonName;
