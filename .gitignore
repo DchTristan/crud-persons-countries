@@ -1,0 +1,37 @@
+## .NET / Visual Studio / VS Code
+
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Rider / VS Code
+.idea/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Test results
+[Tt]est[Rr]esult*/
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Rotativa runtime output (keep the wkhtmltopdf binary itself, ignore generated PDFs if any)
+*.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
