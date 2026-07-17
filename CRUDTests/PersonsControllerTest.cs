@@ -2,6 +2,7 @@
 using CRUDExample.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using ServiceContracts;
 using ServiceContracts.DTO;
@@ -23,7 +24,10 @@ namespace CRUDTests
 
         private readonly Mock<IPersonsService> _personServiceMock;
 
+        private readonly Mock<ILogger<PersonsController>> _loggerMock;
+
         private readonly Fixture _fixture;
+
 
         public PersonsControllerTest()
         {
@@ -33,6 +37,9 @@ namespace CRUDTests
 
             _personServiceMock = new Mock<IPersonsService>();
 
+            _loggerMock = new Mock<ILogger<PersonsController>>();
+
+           
          _countriesService = _countriesServiceMock.Object;
          _personsService = _personServiceMock.Object;
         }
@@ -44,7 +51,7 @@ namespace CRUDTests
             //Arrange
             List<PersonResponse> person_response_list = _fixture.Create<List<PersonResponse>>();
 
-            PersonsController personsController = new PersonsController(_personsService, _countriesService);
+            PersonsController personsController = new PersonsController(_personsService, _countriesService, _loggerMock.Object);
 
             _personServiceMock.Setup(temp => temp.GetFilteredPersons(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(person_response_list);
@@ -77,7 +84,7 @@ namespace CRUDTests
 
             List<CountryResponse> countries = _fixture.Create<List<CountryResponse>>();
 
-            PersonsController personsController = new PersonsController(_personsService, _countriesService);
+            PersonsController personsController = new PersonsController(_personsService, _countriesService, _loggerMock.Object);
 
             _countriesServiceMock.Setup(temp => temp.GetAllCountries())
                  .ReturnsAsync(countries);
@@ -108,7 +115,7 @@ namespace CRUDTests
 
                 List<CountryResponse> countries = _fixture.Create<List<CountryResponse>>();
 
-                PersonsController personsController = new PersonsController(_personsService, _countriesService);
+                PersonsController personsController = new PersonsController(_personsService, _countriesService, _loggerMock.Object);
 
                 _countriesServiceMock.Setup(temp => temp.GetAllCountries())
                      .ReturnsAsync(countries);

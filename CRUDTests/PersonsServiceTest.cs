@@ -3,8 +3,10 @@ using Entities;
 using EntityFrameworkCoreMock;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Moq;
 using RepositoryContracts;
+using Serilog;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
@@ -31,7 +33,10 @@ namespace CRUDTests
            _fixture = new Fixture();
             _personsRepositoryMock = new Mock<IPersonsRepository>();
             _personsRepository = _personsRepositoryMock.Object;
-           _personService = new PersonsService(_personsRepository);
+            var diagnosticContextMock = new Mock<IDiagnosticContext>();
+            var loggerMock = new Mock<ILogger<PersonsService>>();
+
+          _personService = new PersonsService(_personsRepository, loggerMock.Object, diagnosticContextMock.Object);
             _testOutputHelper = testOutputHelper;
         }
 
